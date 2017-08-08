@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://github.com/louisevanderlith/Lith.FlatFile</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Initial Release of Lith.FlatFile</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>flatfiles fixedlengthfiles</tags>
+  </metadata>
+</package>
