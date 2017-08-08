@@ -47,7 +47,6 @@ namespace Lith.FlatFile.Core
             }
 
             return result;
-
         }
     }
 }
