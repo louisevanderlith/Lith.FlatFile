@@ -9,17 +9,37 @@ namespace Lith.FlatFile
     {
         public static IEnumerable<FlatProperty> GetFlatProperties(this IFlatObject obj)
         {
-            var flatProperties = obj.GetType().GetProperties();
+            var properties = obj.GetType().GetProperties();
 
-            return from fProp in flatProperties
-                   let flatAttr = fProp.GetCustomAttribute<FlatPropertyAttribute>()
+            return from prop in properties
+                   let flatAttr = prop.GetCustomAttribute<FlatPropertyAttribute>()
                    where flatAttr != null
                    select new FlatProperty
                    {
-                       Name = fProp.Name,
-                       Value = fProp.GetValue(obj),
+                       Name = prop.Name,
+                       Value = prop.GetValue(obj),
                        Attributes = flatAttr
                    };
+        }
+
+        public static IEnumerable<FlatChild> GetFlatChildren(this IFlatObject obj)
+        {
+            var properties = obj.GetType().GetProperties();
+            var listType = typeof(List<IFlatObject>);
+
+            return from prop in properties
+                   where prop.PropertyType == listType
+                   select new FlatChild
+                   {
+                       ParentID = obj.ID,
+                       Type = prop.PropertyType.GenericTypeArguments.FirstOrDefault(),
+                       Value = (IFlatObject)prop.GetValue(obj)
+                   };
+        }
+
+        public static string ToFlatLine(this IFlatObject obj)
+        {
+            return new LineBuilder(obj).Line;
         }
     }
 }

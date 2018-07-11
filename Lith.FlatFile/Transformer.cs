@@ -35,13 +35,14 @@ namespace Lith.FlatFile
 
         private static IDictionary<Type, Func<object, FlatPropertyAttribute, string>> BuildTransformationMap()
         {
-            var result = new Dictionary<Type, Func<object, FlatPropertyAttribute, string>>();
-
-            result.Add(typeof(Enum), TransformEnum);
-            result.Add(typeof(bool), TransformBool);
-            result.Add(typeof(decimal), TransformDecimal);
-            result.Add(typeof(DateTime), TransformDateTime);
-            result.Add(typeof(int), TransformInt);
+            var result = new Dictionary<Type, Func<object, FlatPropertyAttribute, string>>
+            {
+                { typeof(Enum), TransformEnum },
+                { typeof(bool), TransformBool },
+                { typeof(decimal), TransformDecimal },
+                { typeof(DateTime), TransformDateTime },
+                { typeof(int), TransformInt }
+            };
 
             return result;
         }

@@ -33,15 +33,16 @@ namespace Lith.FlatFile
 
         private IDictionary<Type, Func<string, FlatPropertyAttribute, object>> BuildParseMap()
         {
-            var result = new Dictionary<Type, Func<string, FlatPropertyAttribute, object>>();
-
-            result.Add(typeof(Enum), ParseEnum);
-            result.Add(typeof(bool), ParseBool);
-            result.Add(typeof(decimal), ParseDecimal);
-            result.Add(typeof(int), ParseInt);
-            result.Add(typeof(string), ParseString);
-            result.Add(typeof(char), ParseChar);
-            result.Add(typeof(DateTime), ParseDateTime);
+            var result = new Dictionary<Type, Func<string, FlatPropertyAttribute, object>>
+            {
+                { typeof(Enum), ParseEnum },
+                { typeof(bool), ParseBool },
+                { typeof(decimal), ParseDecimal},
+                { typeof(int), ParseInt},
+                { typeof(string), ParseString},
+                { typeof(char), ParseChar},
+                { typeof(DateTime), ParseDateTime}
+            };
 
             return result;
         }

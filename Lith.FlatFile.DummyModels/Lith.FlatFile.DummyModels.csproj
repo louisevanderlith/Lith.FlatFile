@@ -40,8 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExampleFile.cs" />
+    <Compile Include="ExampleObject.cs" />
     <Compile Include="DumbEnum.cs" />
+    <Compile Include="ExampleObjectB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

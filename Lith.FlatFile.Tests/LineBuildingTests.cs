@@ -12,7 +12,7 @@ namespace Lith.FlatFile.Tests
 
         public LineBuildingTests()
         {
-            _flatObj = new ExampleFile
+            _flatObj = new ExampleObject
             {
                 Amount = 123.456M,
                 ChosenOption = DumbEnum.OptionA,
@@ -46,7 +46,7 @@ namespace Lith.FlatFile.Tests
         [TestMethod]
         public void DeserializedLine_HasAllProperties()
         {
-            var breaker = new LineBreaker<ExampleFile>("EN0120110503XTEST                     000000000123456                      ");
+            var breaker = new LineBreaker<ExampleObject>("EN0120110503XTEST                     000000000123456                      ");
             var actual = breaker.Object;
 
             Assert.AreEqual(DumbEnum.OptionA, actual.ChosenOption);

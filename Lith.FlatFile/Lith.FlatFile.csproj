@@ -46,6 +46,7 @@
     <Compile Include="ITransformer.cs" />
     <Compile Include="LineBreaker.cs" />
     <Compile Include="LineBuilder.cs" />
+    <Compile Include="Models\FlatChild.cs" />
     <Compile Include="Models\FlatProperty.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
