@@ -40,8 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeStringer.cs" />
+    <Compile Include="Core\FlatteningHelper.cs" />
+    <Compile Include="Core\IFlatObject.cs" />
+    <Compile Include="Core\Models\Point.cs" />
+    <Compile Include="Core\Stringer.cs" />
+    <Compile Include="Core\TypeExtensions.cs" />
     <Compile Include="FlatPropertyAttribute.cs" />
-    <Compile Include="IFlatObject.cs" />
     <Compile Include="IFlatObjectExtensions.cs" />
     <Compile Include="ITransformer.cs" />
     <Compile Include="LineBreaker.cs" />
@@ -51,12 +56,6 @@
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transformer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Lith.FlatFile.Core\Lith.FlatFile.Core.csproj">
-      <Project>{c4b97436-dafc-4dcf-b511-a2882926eef3}</Project>
-      <Name>Lith.FlatFile.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

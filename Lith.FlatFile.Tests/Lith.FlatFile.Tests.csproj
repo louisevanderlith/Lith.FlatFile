@@ -57,10 +57,6 @@
     <Compile Include="UsageTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lith.FlatFile.Core\Lith.FlatFile.Core.csproj">
-      <Project>{c4b97436-dafc-4dcf-b511-a2882926eef3}</Project>
-      <Name>Lith.FlatFile.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Lith.FlatFile.DummyModels\Lith.FlatFile.DummyModels.csproj">
       <Project>{e597352d-6dc8-4f19-813c-ad180fd8c361}</Project>
       <Name>Lith.FlatFile.DummyModels</Name>

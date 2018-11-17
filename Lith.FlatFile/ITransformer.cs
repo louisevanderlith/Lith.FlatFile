@@ -1,7 +1,10 @@
-﻿namespace Lith.FlatFile
+﻿using Lith.FlatFile.Models;
+using System;
+
+namespace Lith.FlatFile
 {
     public interface ITransformer
     {
-        string Transform(object value, FlatPropertyAttribute attributes);
+        string Transform(FlatProperty fProp);
     }
 }

@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Lith.FlatFile.Core;
+using System;
 
-namespace Lith.FlatFile.Core
+namespace Lith.FlatFile
 {
     public static class DeStringer
     {
@@ -56,6 +57,11 @@ namespace Lith.FlatFile.Core
             var cleanValue = value.Trim();
 
             return cleanValue == trueValue;
+        }
+
+        public static IFlatObject ToFlatObject<T>(this string value) where T : IFlatObject
+        {
+            return new LineBreaker<T>(value).Object;
         }
     }
 }

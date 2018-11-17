@@ -67,6 +67,12 @@ namespace Lith.FlatFile.DummyModels
         public decimal Amount { get; set; }
 
         /// <summary>
+        /// Emaple of a property that is a IFlatObject
+        /// </summary>
+        [FlatProperty(5, false)]
+        public ExampleNested FlatObj { get; set; }
+
+        /// <summary>
         /// Example of Children
         /// This will happen when Lines in a file are related to the lines that precede them
         /// The Type parameter in the list must inherit from IFlatObject
@@ -82,7 +88,7 @@ namespace Lith.FlatFile.DummyModels
         {
             get
             {
-                return 75;
+                return 80;
             }
         }
     }

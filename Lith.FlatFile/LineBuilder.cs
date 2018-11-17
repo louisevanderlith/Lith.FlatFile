@@ -37,7 +37,7 @@ namespace Lith.FlatFile
             {
                 try
                 {
-                    var item = transformer.Transform(prop.Value, prop.Attributes);
+                    var item = transformer.Transform(prop);
 
                     result.Append(item);
                 }
@@ -56,7 +56,8 @@ namespace Lith.FlatFile
             }
             else
             {
-                throw new Exception("The total line length is more than specified.");
+                var msg = string.Format("The total line length {0} is more than specified {1}", _flatObject.TotalLineLength, result.Length);
+                throw new Exception(msg);
             }
 
             return result.ToString();

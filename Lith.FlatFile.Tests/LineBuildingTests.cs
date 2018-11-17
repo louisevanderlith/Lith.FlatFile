@@ -19,7 +19,11 @@ namespace Lith.FlatFile.Tests
                 FewOptions = 'X',
                 FileDate = new DateTime(2011, 05, 03),
                 HasSomething = false,
-                Name = "TEST"
+                Name = "TEST",
+                FlatObj = new ExampleNested
+                {
+                    Name = "JANNI",
+                }
             };
 
             builder = new LineBuilder(_flatObj);
@@ -37,7 +41,7 @@ namespace Lith.FlatFile.Tests
         [TestMethod]
         public void FinalLineContent_IsCorrect()
         {
-            var expected = "EN0120110503XTEST                     000000000123456                      ";
+            var expected = "EN0120110503XTEST                     000000000123456JANNI                      ";
             var actual = builder.Line;
 
             Assert.AreEqual(expected, actual);
@@ -46,7 +50,7 @@ namespace Lith.FlatFile.Tests
         [TestMethod]
         public void DeserializedLine_HasAllProperties()
         {
-            var breaker = new LineBreaker<ExampleObject>("EN0120110503XTEST                     000000000123456                      ");
+            var breaker = new LineBreaker<ExampleObject>("EN0120110503XTEST                     000000000123456JANNI                      ");
             var actual = breaker.Object;
 
             Assert.AreEqual(DumbEnum.OptionA, actual.ChosenOption);

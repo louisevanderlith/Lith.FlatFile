@@ -18,7 +18,8 @@ namespace Lith.FlatFile
                    {
                        Name = prop.Name,
                        Value = prop.GetValue(obj),
-                       Attributes = flatAttr
+                       Attributes = flatAttr,
+                       Type = prop.PropertyType,
                    };
         }
 

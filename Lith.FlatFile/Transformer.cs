@@ -1,4 +1,5 @@
 ﻿using Lith.FlatFile.Core;
+using Lith.FlatFile.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,20 +15,29 @@ namespace Lith.FlatFile
             transformationMap = BuildTransformationMap();
         }
 
-        public string Transform(object value, FlatPropertyAttribute attributes)
+        public string Transform(FlatProperty fProp)
         {
             var result = string.Empty;
-            var valueType = value.GetType();
-            var valueToUse = value ?? attributes.DefaultValue;
-            var trueType = valueType.BaseType == typeof(Enum) ? typeof(Enum) : valueType;
+            var valueToUse = fProp.Value ?? fProp.Attributes.DefaultValue;
+
+            if (valueToUse == null && fProp.Type.IsValueType)
+            {
+                valueToUse = Activator.CreateInstance(fProp.Type);
+            }
+
+            var trueType = fProp.Type.BaseType == typeof(Enum) ? typeof(Enum) : fProp.Type;
 
             if (transformationMap.ContainsKey(trueType))
             {
-                result = transformationMap[trueType](valueToUse, attributes);
+                result = transformationMap[trueType](valueToUse, fProp.Attributes);
+            }
+            else if (typeof(IFlatObject).IsAssignableFrom(trueType))
+            {
+                result = transformationMap[typeof(IFlatObject)](valueToUse, fProp.Attributes);
             }
             else
             {
-                result = valueToUse.ToString().Pad(attributes.UseNumericPadding, attributes.FieldLength);
+                result = valueToUse.ToString().Pad(fProp.Attributes.UseNumericPadding, fProp.Attributes.FieldLength);
             }
 
             return result;
@@ -37,14 +47,37 @@ namespace Lith.FlatFile
         {
             var result = new Dictionary<Type, Func<object, FlatPropertyAttribute, string>>
             {
+                { typeof(String), TransformString },
+                {typeof(Char), TransformChar },
                 { typeof(Enum), TransformEnum },
                 { typeof(bool), TransformBool },
                 { typeof(decimal), TransformDecimal },
                 { typeof(DateTime), TransformDateTime },
-                { typeof(int), TransformInt }
+                { typeof(int), TransformInt },
+                {typeof(IFlatObject), TransformFlatObject }
             };
 
             return result;
+        }
+
+        private static string TransformString(object value, FlatPropertyAttribute attributes)
+        {
+            if (value == null)
+            {
+                value = string.Empty;
+            }
+
+            return value.ToString().Pad(attributes.UseNumericPadding, attributes.FieldLength);
+        }
+
+        private static string TransformChar(object value, FlatPropertyAttribute attributes)
+        {
+            if (value == null)
+            {
+                value = ' ';
+            }
+
+            return value.ToString().Pad(attributes.UseNumericPadding, attributes.FieldLength);
         }
 
         private static string TransformEnum(object value, FlatPropertyAttribute attributes)
@@ -83,6 +116,13 @@ namespace Lith.FlatFile
             var realValue = (int)value;
 
             return realValue.ToString().Pad(attributes.UseNumericPadding, attributes.FieldLength);
+        }
+
+        public static string TransformFlatObject(object value, FlatPropertyAttribute attribute)
+        {
+            var realValue = (IFlatObject)value;
+
+            return realValue.ToFlatLine();
         }
     }
 }

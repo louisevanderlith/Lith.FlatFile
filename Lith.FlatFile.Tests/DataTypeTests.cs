@@ -127,5 +127,18 @@ namespace Lith.FlatFile.Tests
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void FlatObjectDeserialize()
+        {
+            var input = "JANNI";
+            var actual = input.ToFlatObject<ExampleNested>();
+            var expected = new ExampleNested
+            {
+                Name = input
+            };
+
+            Assert.AreEqual(expected.ToFlatLine(), actual.ToFlatLine());
+        }
     }
 }

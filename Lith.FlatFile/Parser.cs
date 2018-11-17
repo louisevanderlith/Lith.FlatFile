@@ -7,25 +7,32 @@ namespace Lith.FlatFile
 {
     public class Parser
     {
-        private IDictionary<Type, Func<string, FlatPropertyAttribute, object>> parseMap;
-        private int lastIndex;
+        private IDictionary<Type, Func<string, FlatPropertyAttribute, object>> _parseMap;
+        private int _lastIndex;
+        private Type _targetType;
 
         public Parser()
         {
-            parseMap = BuildParseMap();
+            _parseMap = BuildParseMap();
 
-            lastIndex = default(int);
+            _lastIndex = default(int);
         }
 
         public object Parse(Type targetType, string fullLine, FlatPropertyAttribute attributes)
         {
+            _targetType = targetType;
+
             var result = default(object);
             var propSection = GetPropertyFromLine(fullLine, attributes.FieldLength);
             var trueType = targetType.BaseType == typeof(Enum) ? typeof(Enum) : targetType;
 
-            if (parseMap.ContainsKey(trueType))
+            if (_parseMap.ContainsKey(trueType))
             {
-                result = parseMap[trueType](propSection, attributes);
+                result = _parseMap[trueType](propSection, attributes);
+            }
+            else if (typeof(IFlatObject).IsAssignableFrom(trueType))
+            {
+                result = _parseMap[typeof(IFlatObject)](propSection, attributes);
             }
 
             return result;
@@ -41,7 +48,8 @@ namespace Lith.FlatFile
                 { typeof(int), ParseInt},
                 { typeof(string), ParseString},
                 { typeof(char), ParseChar},
-                { typeof(DateTime), ParseDateTime}
+                { typeof(DateTime), ParseDateTime},
+                { typeof(IFlatObject), ParseFlatObject }
             };
 
             return result;
@@ -49,8 +57,8 @@ namespace Lith.FlatFile
 
         private string GetPropertyFromLine(string line, int length)
         {
-            var result = line.Substring(lastIndex, length);
-            lastIndex += length;
+            var result = line.Substring(_lastIndex, length);
+            _lastIndex += length;
 
             return result;
         }
@@ -112,6 +120,16 @@ namespace Lith.FlatFile
         private object ParseDateTime(string value, FlatPropertyAttribute attributes)
         {
             return value.ToDateTime(attributes.StringFormat);
+        }
+
+        private object ParseFlatObject(string value, FlatPropertyAttribute attributes)
+        {
+            var type = typeof(LineBreaker<>).MakeGenericType(_targetType);
+            var breakerInst = Activator.CreateInstance(type, value);
+
+            var objProp = type.GetProperty("Object");
+            
+            return  objProp.GetValue(breakerInst);
         }
     }
 }
