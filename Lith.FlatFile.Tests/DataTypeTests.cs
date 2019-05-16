@@ -59,6 +59,26 @@ namespace Lith.FlatFile.Tests
         }
 
         [TestMethod]
+        public void DecimalSerializeNoCents()
+        {
+            var input = 118937m;
+            var actual = input.Transform(10, 2);
+            var expected = "0011893700";
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void DecimalSerializeManyCents()
+        {
+            var input = 825923.1943m;
+            var actual = input.Transform(12, 2);
+            var expected = "000082592319";
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
         public void DecimalSerializeAdvanced()
         {
             var input = 5.6789M;
@@ -114,6 +134,16 @@ namespace Lith.FlatFile.Tests
             var input = "20010908";
             var actual = input.ToDateTime("yyyyMMdd");
             var expected = new DateTime(2001, 09, 08);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void DateTimeDeserialize_Backward()
+        {
+            var input = "18092001";
+            var actual = input.ToDateTime("ddMMyyyy");
+            var expected = new DateTime(2001, 09, 18);
 
             Assert.AreEqual(expected, actual);
         }

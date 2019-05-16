@@ -46,6 +46,7 @@ namespace Lith.FlatFile
                 { typeof(bool), ParseBool },
                 { typeof(decimal), ParseDecimal},
                 { typeof(int), ParseInt},
+                { typeof(long), ParseLong},
                 { typeof(string), ParseString},
                 { typeof(char), ParseChar},
                 { typeof(DateTime), ParseDateTime},
@@ -90,6 +91,14 @@ namespace Lith.FlatFile
         {
             var result = default(int);
             int.TryParse(value, out result);
+
+            return result;
+        }
+
+        private object ParseLong(string value, FlatPropertyAttribute attributes)
+        {
+            var result = default(long);
+            long.TryParse(value, out result);
 
             return result;
         }

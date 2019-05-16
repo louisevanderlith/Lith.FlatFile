@@ -56,7 +56,7 @@ namespace Lith.FlatFile
             }
             else
             {
-                var msg = string.Format("The total line length {0} is more than specified {1}", _flatObject.TotalLineLength, result.Length);
+                var msg = string.Format("The total line length {0} is more than specified {1}", result.Length, _flatObject.TotalLineLength);
                 throw new Exception(msg);
             }
 
