@@ -62,12 +62,19 @@ namespace Lith.FlatFile
 
         private static string TransformString(object value, FlatPropertyAttribute attributes)
         {
-            if (value == null)
+            var sval = value as string;
+
+            if (sval == null)
             {
-                value = string.Empty;
+                sval = string.Empty;
             }
 
-            return value.ToString().Pad(attributes.UseNumericPadding, attributes.FieldLength);
+            if (sval.Length > attributes.FieldLength)
+            {
+                throw new ArgumentException($"Value has length of {sval.Length}, Specification only allows {attributes.FieldLength}. Value was; '{sval}'");
+            }
+
+            return sval.ToString().Pad(attributes.UseNumericPadding, attributes.FieldLength);
         }
 
         private static string TransformChar(object value, FlatPropertyAttribute attributes)
