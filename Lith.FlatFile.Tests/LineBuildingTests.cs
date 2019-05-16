@@ -8,7 +8,7 @@ namespace Lith.FlatFile.Tests
     public class LineBuildingTests
     {
         private readonly LineBuilder builder;
-        private readonly IFlatObject _flatObj;
+        private IFlatObject _flatObj;
 
         public LineBuildingTests()
         {
@@ -27,6 +27,28 @@ namespace Lith.FlatFile.Tests
             };
 
             builder = new LineBuilder(_flatObj);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void LineLength_TooLongProperty_MustbeShortened()
+        {
+            _flatObj = new ExampleObject
+            {
+                Amount = 123.456M,
+                ChosenOption = DumbEnum.OptionA,
+                FewOptions = 'X',
+                FileDate = new DateTime(2011, 05, 03),
+                HasSomething = false,
+                Name = "TEST",
+                FlatObj = new ExampleNested
+                {
+                    Name = "JANNIE", //1char more
+                }
+            };
+
+            var line = new LineBuilder(_flatObj).Line;
+            Assert.AreNotEqual(string.Empty, line);
         }
 
         [TestMethod]
