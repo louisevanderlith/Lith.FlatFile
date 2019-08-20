@@ -23,7 +23,7 @@ namespace Lith.FlatFile
             _targetType = targetType;
 
             var result = default(object);
-            var propSection = GetPropertyFromLine(fullLine, attributes.FieldLength);
+            var propSection = GetPropertyFromLine(fullLine, attributes.FieldLength, attributes.Short);
             var trueType = targetType.BaseType == typeof(Enum) ? typeof(Enum) : targetType;
 
             if (_parseMap.ContainsKey(trueType))
@@ -62,6 +62,19 @@ namespace Lith.FlatFile
             _lastIndex += length;
 
             return result;
+        }
+
+        private string GetPropertyFromLine(string line, int length, bool isShort)
+        {
+            if (isShort && _lastIndex + length > line.Length)
+            {
+                var result = line.Substring(_lastIndex);
+                _lastIndex += result.Length;
+
+                return result;
+            }
+
+            return GetPropertyFromLine(line, length);
         }
 
         private object ParseEnum(string value, FlatPropertyAttribute attributes)
@@ -137,8 +150,8 @@ namespace Lith.FlatFile
             var breakerInst = Activator.CreateInstance(type, value);
 
             var objProp = type.GetProperty("Object");
-            
-            return  objProp.GetValue(breakerInst);
+
+            return objProp.GetValue(breakerInst);
         }
     }
 }

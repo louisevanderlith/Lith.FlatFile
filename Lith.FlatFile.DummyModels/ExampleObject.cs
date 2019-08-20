@@ -80,6 +80,9 @@ namespace Lith.FlatFile.DummyModels
         /// </summary>
         public List<ExampleObjectB> Children { get; set; }
 
+        [FlatProperty(10, false, Short = true )]
+        public string ShortMessage { get; set; }
+
         /// <summary>
         /// Indicates the maximum length for this type of Record/Line
         /// This is required by the IFlatObject
@@ -88,7 +91,7 @@ namespace Lith.FlatFile.DummyModels
         {
             get
             {
-                return 80;
+                return 68;
             }
         }
     }

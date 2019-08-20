@@ -64,5 +64,11 @@ namespace Lith.FlatFile
                 decimalPlaces = value;
             }
         }
+
+        /// <summary>
+        /// Specifies that the field may have less characters to work with then specified.
+        /// Some files don't always Pad strings and we still need to get the value
+        /// </summary>
+        public bool Short { get; set; }
     }
 }

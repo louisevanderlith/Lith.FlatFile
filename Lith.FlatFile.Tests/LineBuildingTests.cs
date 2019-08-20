@@ -23,15 +23,15 @@ namespace Lith.FlatFile.Tests
                 FlatObj = new ExampleNested
                 {
                     Name = "JANNI",
-                }
+                },
+                ShortMessage = "HAPPI"
             };
 
             builder = new LineBuilder(_flatObj);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void LineLength_TooLongProperty_MustbeShortened()
+        public void LineLength_TooLongProperty_AutomaticallyShortened()
         {
             _flatObj = new ExampleObject
             {
@@ -63,7 +63,7 @@ namespace Lith.FlatFile.Tests
         [TestMethod]
         public void FinalLineContent_IsCorrect()
         {
-            var expected = "EN0120110503XTEST                     000000000123456JANNI                      ";
+            var expected = "EN0120110503XTEST                     000000000123456JANNIHAPPI     ";
             var actual = builder.Line;
 
             Assert.AreEqual(expected, actual);
@@ -72,7 +72,16 @@ namespace Lith.FlatFile.Tests
         [TestMethod]
         public void DeserializedLine_HasAllProperties()
         {
-            var breaker = new LineBreaker<ExampleObject>("EN0120110503XTEST                     000000000123456JANNI                      ");
+            var breaker = new LineBreaker<ExampleObject>("EN0120110503XTEST                     000000000123456JANNIHAPPI     ");
+            var actual = breaker.Object;
+
+            Assert.AreEqual(DumbEnum.OptionA, actual.ChosenOption);
+        }
+
+        [TestMethod]
+        public void DeserializedLine_ShortString_HasAllProperties()
+        {
+            var breaker = new LineBreaker<ExampleObject>("EN0120110503XTEST                     000000000123456JANNIHAPPI");
             var actual = breaker.Object;
 
             Assert.AreEqual(DumbEnum.OptionA, actual.ChosenOption);
