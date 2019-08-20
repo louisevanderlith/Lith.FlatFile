@@ -71,10 +71,10 @@ namespace Lith.FlatFile
 
             if (sval.Length > attributes.FieldLength)
             {
-                throw new ArgumentException($"Value has length of {sval.Length}, Specification only allows {attributes.FieldLength}. Value was; '{sval}'");
+                return sval.Substring(0, attributes.FieldLength);
             }
 
-            return sval.ToString().Pad(attributes.UseNumericPadding, attributes.FieldLength);
+            return sval.Pad(attributes.UseNumericPadding, attributes.FieldLength);
         }
 
         private static string TransformChar(object value, FlatPropertyAttribute attributes)
