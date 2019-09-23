@@ -6,11 +6,13 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <projectUrl>https://github.com/louisevanderlith/Lith.FlatFile</projectUrl>
+    <licenseUrl>https://licenses.nuget.org/GPL-3.0-only</licenseUrl>
+    <projectUrl>https://github.com/louisevanderlith/lith.flatfile</projectUrl>
+    <iconUrl>https://theme.avosa.co.za/v1/asset/ico/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial Release of Lith.FlatFile</releaseNotes>
-    <copyright>Copyright 2017</copyright>
-    <tags>flatfiles fixedlengthfiles</tags>
+    <releaseNotes>String Fields can now be populated with values that are shorter than specified.</releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>flatfileparsing flatparse flatfiles flatpoco</tags>
   </metadata>
 </package>

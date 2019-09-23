@@ -15,6 +15,11 @@ namespace Lith.FlatFile
 
         public static DateTime ToDateTime(this string value, string format)
         {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return DateTime.MinValue;
+            }
+
             var yearPart = FlatteningHelper.GetPointValue(format, 'y', value);
             var monthPart = FlatteningHelper.GetPointValue(format, 'M', value);
             var dayPart = FlatteningHelper.GetPointValue(format, 'd', value);
@@ -43,6 +48,11 @@ namespace Lith.FlatFile
 
         public static decimal ToDecimal(this string value, int decimalPlaces)
         {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return 0M;
+            }
+
             var multiplier = FlatteningHelper.GetDecimalMultiplier(decimalPlaces);
             var iValue = decimal.Parse(value);
             var divided = iValue / multiplier;
@@ -54,6 +64,11 @@ namespace Lith.FlatFile
 
         public static bool ToBool(this string value, string trueValue)
         {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
             var cleanValue = value.Trim();
 
             return cleanValue == trueValue;
