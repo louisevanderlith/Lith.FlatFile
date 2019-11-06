@@ -7,8 +7,14 @@ namespace Lith.FlatFile
     {
         public static T ToEnum<T>(this string value)
         {
-            var trimmedValue = value.Length > 1 ? value.TrimStart('0') : value;
-            var enumObj = Enum.Parse(typeof(T), trimmedValue);
+            var isValid = int.TryParse(value, out int trimmed);
+
+            if (!isValid)
+            {
+                trimmed = 0;
+            }
+            
+            var enumObj = Enum.Parse(typeof(T), trimmed.ToString());
 
             return (T)enumObj;
         }
