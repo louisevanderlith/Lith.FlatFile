@@ -33,7 +33,9 @@ namespace Lith.FlatFile
 
             var date = string.Format("{0}/{1}/{2}{3}", yearPart, monthPart, dayPart, time);
 
-            return DateTime.Parse(date);
+            DateTime.TryParse(date, out DateTime result);
+
+            return result;
         }
 
         private static string GetTimePart(string rawDate, string format)
