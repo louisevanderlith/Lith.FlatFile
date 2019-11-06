@@ -33,7 +33,7 @@ namespace Lith.FlatFile.Core
             {
                 var value = rawDate.Substring(datePoint.Start, datePoint.Length);
 
-                result = int.Parse(value);
+                int.TryParse(value, out result);
             }
 
             return result;

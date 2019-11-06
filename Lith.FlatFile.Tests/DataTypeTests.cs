@@ -159,6 +159,16 @@ namespace Lith.FlatFile.Tests
         }
 
         [TestMethod]
+        public void DateTimeDeserializeEmpty()
+        {
+            var input = "00000000";
+            var actual = input.ToDateTime("yyyyMMdd");
+            var expected = DateTime.MinValue;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
         public void FlatObjectDeserialize()
         {
             var input = "JANNI";
